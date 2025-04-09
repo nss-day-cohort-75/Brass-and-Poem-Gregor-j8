@@ -128,7 +128,8 @@ Console.WriteLine(@"
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
         foreach(Product product in products) {
-        Console.WriteLine($"{product.Name} {product.Price}");
+            ProductType type = productTypes.FirstOrDefault(Types => Types.Id == product.ProductTypeId);
+        Console.WriteLine($"{product.Name} {product.Price} {type.Title}");
     }
 }
 
@@ -149,7 +150,21 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 
 void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+    Console.WriteLine("Add A Product");
+    Console.WriteLine("");
+    Console.WriteLine("Add a Name");
+    string name = Console.ReadLine();
+    Console.WriteLine("Add a Price");
+    decimal price =  decimal.Parse(Console.ReadLine());
+    Console.WriteLine("Add a Product Type Id");
+    int TypeId = int.Parse(Console.ReadLine());
+
+    Product newProduct = new Product {
+        Name = name,
+        Price = price,
+        ProductTypeId = TypeId
+    };
+    products.Add(newProduct);
 }
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
