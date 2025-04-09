@@ -169,7 +169,22 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+foreach(Product product in products) {
+    Console.WriteLine($"{product.Name}");
+    }
+    string ChoosenUpdate = Console.ReadLine().Trim();
+    Product ProductToUpdate = null;
+
+    ProductToUpdate = products.FirstOrDefault(product => product.Name == ChoosenUpdate);
+    
+    if (ProductToUpdate != null) {
+        Console.WriteLine($"");
+        Console.WriteLine($"Please enter what you would like to change {ProductToUpdate.Name} to");
+        ProductToUpdate.Name = Console.ReadLine();
+        Console.WriteLine(@$"Please enter what you would like to change the price of {ProductToUpdate.Name} to 
+it is currently{ProductToUpdate.Price}");
+        ProductToUpdate.Price = decimal.Parse(Console.ReadLine());
+    }
 }
 
 // don't move or change this!
