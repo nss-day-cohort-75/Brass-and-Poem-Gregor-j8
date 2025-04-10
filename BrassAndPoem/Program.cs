@@ -47,11 +47,10 @@ List<ProductType> productTypes = new List<ProductType>(){
     },
 };
 
-
-//put your greeting here
-Console.WriteLine("Welcome to the Brass and Poem!");
 bool loop = true;
-//implement your loop here
+
+void MainMenu () {
+Console.WriteLine("Welcome to the Brass and Poem!");
 while (loop == true)
 {
 Console.WriteLine("Please select an option from the menu below:");
@@ -62,93 +61,121 @@ Console.WriteLine(@"
 4. Add a product
 5. Update a product
 6. Exit");
-
-    string input = Console.ReadLine();
-    switch (input)
+    try {
+        string input = Console.ReadLine();
+        switch (input)
+        {
+            case "1":
+                DisplayMenu();
+                break;
+            case "2":
+                DisplayAllProducts(products, productTypes);
+                break;
+            case "3":
+                DeleteProduct(products, productTypes);
+                break;
+            case "4":
+                AddProduct(products, productTypes);
+                break;
+            case "5":
+                UpdateProduct(products, productTypes);
+                break;
+            case "6":
+                loop = false;
+                break;
+            default:
+                Console.WriteLine("Please select a valid option.");
+                break;
+        }
+    } catch (Exception ex)
     {
-        case "1":
-            DisplayMenu();
-            break;
-        case "2":
-            DisplayAllProducts(products, productTypes);
-            break;
-        case "3":
-            DeleteProduct(products, productTypes);
-            break;
-        case "4":
-            AddProduct(products, productTypes);
-            break;
-        case "5":
-            UpdateProduct(products, productTypes);
-            break;
-        case "6":
-            loop = false;
-            break;
-        default:
-            Console.WriteLine("Please select a valid option.");
-            break;
+        Console.WriteLine($"An error occurred: {ex.Message}");
     }
+    }   
 }
 
 void DisplayMenu()
 {
-Console.WriteLine("Please select an option from the menu below:");
-Console.WriteLine(@"
+    try
+    {
+        Console.WriteLine("Please select an option from the menu below:");
+        Console.WriteLine(@"
 1. Display all products
 2. Delete a product
 3. Add a product
 4. Update a product
 5. Exit");
 
-    string userChoice = Console.ReadLine();
-    switch (userChoice)
+        string userChoice = Console.ReadLine();
+        switch (userChoice)
+        {
+            case "1":
+                DisplayAllProducts(products, productTypes);
+                break;
+            case "2":
+                DeleteProduct(products, productTypes);
+                break;
+            case "3":
+                AddProduct(products, productTypes);
+                break;
+            case "4":
+                UpdateProduct(products, productTypes);
+                break;
+            case "5":
+                loop = false;
+                break;
+            default:
+                Console.WriteLine("Please select a valid option.");
+                break;
+        }
+    }
+    catch (Exception ex)
     {
-
-        case "1":
-            DisplayAllProducts(products, productTypes);
-            break;
-        case "2":
-            DeleteProduct(products, productTypes);
-            break;
-        case "3":
-            AddProduct(products, productTypes);
-            break;
-        case "4":
-            UpdateProduct(products, productTypes);
-            break;
-        case "5":
-            loop = false;
-            break;
-        default:
-            Console.WriteLine("Please select a valid option.");
-            break;
+        Console.WriteLine($"An error occurred: {ex.Message}");
     }
 }
 
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
-    int indexNumber = 1;
-        foreach(Product product in products) {
+    try
+    {
+        int indexNumber = 1;
+        foreach (Product product in products)
+        {
             int changedInt = indexNumber++;
             ProductType type = productTypes.FirstOrDefault(Types => Types.Id == product.ProductTypeId);
-        Console.WriteLine($"{changedInt}. {product.Name} {product.Price} {type.Title}");
+            string typeTitle = type.Title;
+            Console.WriteLine($"{changedInt}. {product.Name} {product.Price} {typeTitle}");
+        }
+        Console.WriteLine("Press enter to continue");
+        Console.ReadLine();
     }
-    Console.WriteLine($"Press enter to continue");
-    Console.ReadLine();
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while displaying products: {ex.Message}");
+    }
 }
+
 
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 {
+    try {
     foreach(Product product in products) {
     Console.WriteLine($"{products.IndexOf(product) + 1}. {product.Name}");
     }
     Console.WriteLine($"enter number you would like to delete");
     int ChoosenDelete = int.Parse(Console.ReadLine().Trim());
     products.RemoveAt(ChoosenDelete - 1);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while displaying products: {ex.Message}");
+    }
 }
 
 void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
+    try {
     Console.WriteLine("Add A Product");
     Console.WriteLine("");
     Console.WriteLine("Add a Name");
@@ -166,11 +193,18 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
         Price = price,
         ProductTypeId = TypeId
     };
+    
     products.Add(newProduct);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while displaying products: {ex.Message}");
+    }
 }
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
+    try {
 foreach(Product product in products) {
     Console.WriteLine($"{products.IndexOf(product) + 1}. {product.Name}");
     }
@@ -185,7 +219,13 @@ foreach(Product product in products) {
 it is currently {ProductToUpdate.Price}");
         ProductToUpdate.Price = decimal.Parse(Console.ReadLine());
     }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while displaying products: {ex.Message}");
+    }
 }
+MainMenu();
 
 // don't move or change this!
 public partial class Program { }
