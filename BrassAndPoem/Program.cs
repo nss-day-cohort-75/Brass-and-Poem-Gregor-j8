@@ -166,6 +166,8 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
     Console.WriteLine($"enter number you would like to delete");
     int ChoosenDelete = int.Parse(Console.ReadLine().Trim());
     products.RemoveAt(ChoosenDelete - 1);
+    Console.WriteLine("Press enter to continue");
+    Console.ReadLine();
     }
     catch (Exception ex)
     {
@@ -195,6 +197,8 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
     };
     
     products.Add(newProduct);
+    Console.WriteLine("Press enter to continue");
+    Console.ReadLine();
     }
     catch (Exception ex)
     {
@@ -218,6 +222,8 @@ foreach(Product product in products) {
         Console.WriteLine(@$"Please enter what you would like to change the price of {ProductToUpdate.Name} to 
 it is currently {ProductToUpdate.Price}");
         ProductToUpdate.Price = decimal.Parse(Console.ReadLine());
+    Console.WriteLine("Press enter to continue");
+    Console.ReadLine(); 
     }
     }
     catch (Exception ex)
