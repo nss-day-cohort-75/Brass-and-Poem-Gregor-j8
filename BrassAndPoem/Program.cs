@@ -127,25 +127,24 @@ Console.WriteLine(@"
 
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
+    int indexNumber = 1;
         foreach(Product product in products) {
+            int changedInt = indexNumber++;
             ProductType type = productTypes.FirstOrDefault(Types => Types.Id == product.ProductTypeId);
-        Console.WriteLine($"{product.Name} {product.Price} {type.Title}");
+        Console.WriteLine($"{changedInt}. {product.Name} {product.Price} {type.Title}");
     }
+    Console.WriteLine($"Press enter to continue");
+    Console.ReadLine();
 }
 
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 {
     foreach(Product product in products) {
-    Console.WriteLine($"{product.Name}");
+    Console.WriteLine($"{products.IndexOf(product) + 1}. {product.Name}");
     }
-    string ChoosenDelete = Console.ReadLine().Trim();
-    Product productToDelete = null;
-
-    productToDelete = products.FirstOrDefault(product => product.Name == ChoosenDelete);
-    
-    if (productToDelete != null) {
-        products.Remove(productToDelete);
-    }
+    Console.WriteLine($"enter number you would like to delete");
+    int ChoosenDelete = int.Parse(Console.ReadLine().Trim());
+    products.RemoveAt(ChoosenDelete - 1);
 }
 
 void AddProduct(List<Product> products, List<ProductType> productTypes)
@@ -156,6 +155,9 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
     string name = Console.ReadLine();
     Console.WriteLine("Add a Price");
     decimal price =  decimal.Parse(Console.ReadLine());
+    foreach(ProductType Type in productTypes) {
+    Console.WriteLine($"{Type.Id}. {Type.Title}");
+    }
     Console.WriteLine("Add a Product Type Id");
     int TypeId = int.Parse(Console.ReadLine());
 
@@ -170,19 +172,17 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
 foreach(Product product in products) {
-    Console.WriteLine($"{product.Name}");
+    Console.WriteLine($"{products.IndexOf(product) + 1}. {product.Name}");
     }
-    string ChoosenUpdate = Console.ReadLine().Trim();
-    Product ProductToUpdate = null;
-
-    ProductToUpdate = products.FirstOrDefault(product => product.Name == ChoosenUpdate);
-    
+    int ChoosenUpdate = int.Parse(Console.ReadLine().Trim());
+    Product ProductToUpdate = products[ChoosenUpdate - 1];
+    ProductToUpdate = products.FirstOrDefault(product => product.Name == ProductToUpdate.Name);
     if (ProductToUpdate != null) {
         Console.WriteLine($"");
         Console.WriteLine($"Please enter what you would like to change {ProductToUpdate.Name} to");
         ProductToUpdate.Name = Console.ReadLine();
         Console.WriteLine(@$"Please enter what you would like to change the price of {ProductToUpdate.Name} to 
-it is currently{ProductToUpdate.Price}");
+it is currently {ProductToUpdate.Price}");
         ProductToUpdate.Price = decimal.Parse(Console.ReadLine());
     }
 }
